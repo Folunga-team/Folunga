@@ -1,0 +1,22 @@
+
+
+#mycanvas {
+    background: #cdcdcd; 
+    position:fixed; 
+    z-index:-1; 
+    height: 100vh; 
+    width: 100vw; 
+    display: block;
+}
+
+.login-card {
+    min-height: 80vh !important;
+    margin: unset !important; 
+    position: absolute !important; 
+    right: 2% !important; 
+    top: 4% !important;
+}
+
+label{
+    color: black !important;
+}

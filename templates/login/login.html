@@ -1,0 +1,80 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Folunga</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/materialize.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+
+<body>
+  <script id="vertexShader" type="x-shader/x-vertex">
+    attribute vec3 pos;
+    attribute vec4 clr;
+    
+    uniform mat4 trans;
+    
+    varying vec4 vcolor;
+    
+    void main()
+    {
+        gl_Position = trans * vec4(pos,1);
+        vcolor = clr;
+    }
+  </script>
+  <script id="fragmentShader" type="x-shader/x-fragment">
+    precision mediump float;
+    
+    varying vec4 vcolor;
+    
+    void main()
+    {
+        gl_FragColor = vcolor;
+    }
+  </script>
+  <canvas id="mycanvas"></canvas>
+  <div class="row">
+    <! agregar lo de responsive>
+    <div class="col s3 m3 l3 red card-panel z-depth-5 my-wrapper valign-wrapper center-align login-card">
+      <form class="col s12" method="post">
+        <div class='row'>
+          <img src="static/img/f.png" alt="" class="circle" style="max-width: 40%;"> <!-- notice the "circle" class -->
+          <div class='input-field col s12 email-input'>
+            <i class="material-icons prefix">account_circle</i>
+            <input class='validate' type='email' name='email' id='email' />
+            <label for='email'>Email</label>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='input-field col s12'>
+            <i class="material-icons prefix">lock</i>
+            <input class='validate' type='password' name='password' id='password' />
+            <label clas='blue-text' for='password'>Password</label>
+          </div>
+          <label style='float: right;'>
+            <a class='blue-text' href='#!'><b>Forgot Password?</b></a>
+          </label>
+        </div>
+
+        <br />
+        <center>
+          <div class='row'>
+            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect blue darken-1'>Login</button>
+          </div>
+        </center>
+      </form>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename= 'js/materialize.min.js') }}"></script>
+  <script src="{{ url_for('static', filename= 'js/webgl.js') }}"></script>
+</body>
+</html>
