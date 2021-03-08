@@ -1,0 +1,54 @@
+Stage-1 of development process:
+
+I want these four files as of 2021-03-09 00:20:
+
+Key to Understand:
+"text"
+{{picture.jpg}}
+[form]
+(button)
+<link>
+
+1) "index.html"
+{
+	"Welcome to Folunga"
+	{{Picture of Folu as logo}}
+	[email]
+	[password]
+	(login)
+	(register)
+	<forgot_password>
+
+}
+
+
+2) "register.html"
+{
+	[First Name]
+	[Last Name]
+	[Date of Birth]
+	[email]
+	[password]
+	(Register)
+	// I want 5 forms and a button now
+}
+
+
+3) "profile_page.html"
+{
+ 	"First Name" "Last name" (log_out)
+ 	"Date of Birth"
+ 	// I want only three fields on profile page now, and a log_out button
+}
+
+
+4) "forget_password.html"
+{
+	"Passworn will be emailed to you"
+	[Enter email form]
+	(button to send password to email)
+	// I want a text, a form, and a button 
+
+}
+
+
