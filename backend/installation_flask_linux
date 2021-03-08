@@ -1,0 +1,58 @@
+What I do for install Flask on Linux.
+
+Kafi Ul Shabbir
+2021-03-08 15:20
+
+// These notes for me.
+// I remember what and why.
+// I know good(fancy) english. But, I love easy think.
+
+Steps:
+
+1) I open terminal.
+
+2) I check if python have or not:
+	I run: python3 -V
+	Computer show: Python 3.8.5
+	Reason: Python is compulsory
+	
+3) I install "virtual environment": 
+	I run: sudo apt install python3-venv
+	Reason: I need Python Virual Environment.
+		Because, in this "venv", I install and use Flask.
+
+4) Create new directory:
+	I run: $ mkdir flask_application && cd flask_application
+	
+5) I create python virtual environment:
+	I run: $ python3 -m venv venv
+	Description: 
+		This directory is also called virtual environment.
+		'venv' contain a copy of all "python supporting files"
+		
+6) I activate the venv:
+	I run: source venv/bin/activate
+	Computer show:
+		putin@putinscomputer:~/flask_application$ source venv/bin/activate
+		(venv) putin@putinscomputer:~/flask_application$ 
+	
+	Description:
+		(venv) tell me I am in virtual environment
+		
+7) I install flask with pip:
+	Description: Pip is "Python package manager"
+	I run: pip install Flask
+	Computer Show:
+		Collecting Flask
+		 Downloading Flask-1.1.2-py2.py3-none-any.whl (94 kB)
+		 ...
+		 Successfully installed Flask-1.1.2 Jinja2-2.11.3 MarkupSafe-1.1.1 Werkzeug-1.0.1 click-7.1.2 itsdangerous-1.1.0
+
+8) I check if Flask have or not:
+	I run: python -m flask --version
+	Computer Show:
+		(venv) putin@putinscomputer:~/flask_application$ python -m flask --version
+		Python 3.8.5
+		Flask 1.1.2
+		Werkzeug 1.0.1
+		
