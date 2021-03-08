@@ -18,7 +18,8 @@ Key to Understand:
 	(login)
 	(register)
 	<forgot_password>
-
+	
+	https://drive.google.com/file/d/1yA-euQ5ho8vn_swSk_0WIfO9l-u_zcjb/view?usp=sharing
 }
 
 
@@ -39,6 +40,7 @@ Key to Understand:
  	"First Name" "Last name" (log_out)
  	"Date of Birth"
  	// I want only three fields on profile page now, and a log_out button
+	https://drive.google.com/file/d/1yCPpgIZ2UamyYd_hMc3oxbNzhCv6ixmT/view?usp=sharing
 }
 
 
