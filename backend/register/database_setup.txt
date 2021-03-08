@@ -1,0 +1,16 @@
+Notes about database
+
+from flask_sqlalchemy import SQLAlchemy
+
+app.cpnfig['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////test/db'
+
+db = SQLAlchemy(app)
+
+(venv) putin@putinscomputer:~/register$ python3
+
+
+>>> from app import db
+
+
+>>> db.create_all()
+
