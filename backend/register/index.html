@@ -1,0 +1,31 @@
+<html>
+	<body>
+		<form method="POST">
+			First Name: <input type="text" name="first_name">
+			<br>
+			Last Name: <input type="text" name="last_name">
+			<br>
+			Email: <input type="text" name="email">
+			<br>
+			<input type="submit" value="Register">
+		</form>
+
+		
+		<table border = 1>
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Likes</th>
+			</tr>
+		{% for profile in database_profile_range %}
+			<tr>
+				<td>{{ profile.first_name }}</td>
+				<td>{{ profile.last_name }}</td>
+				<td>{{ profile.email }}</td>
+				<td>{{ profile.likes }}</td>
+			</tr>
+		{% endfor %}
+		</table>
+	</body>
+</html>
