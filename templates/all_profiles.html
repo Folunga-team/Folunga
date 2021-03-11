@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}
+	All Profiles
+{% endblock %}
+
+{% block body %}
+	<h2>All "{{num_profiles}}" members are here, no tension, no fear</h2>
+	<table border = 1>
+		<tr>
+			<th>Username</th>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Password</th>
+			<th>Likes</th>
+		</tr>
+		{% for profile in lst_profiles %}
+		<tr>
+			<td><a href = "/profile_page/{{profile.username}}">{{profile.username}}</a></td>
+			<td>{{profile.name}}</td>
+			<td>{{profile.email}}</td>
+			<td>{{profile.password}}</td>
+			<td>{{profile.num_likes}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

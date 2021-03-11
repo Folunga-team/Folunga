@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}
+	{{profile.username}}'s Page
+{% endblock %}
+
+{% block body %}
+	<p>You are now seeing {{profile.username}}</p>
+	<p>Username: {{profile.username}}</p>
+	<p>Name: {{profile.name}}</p>
+	<p>Email: {{profile.email}}</p>
+	<p>Likes: {{profile.num_likes}}</p>
+	<form method = "post">
+		<p><input type = "submit" value = "Like"></p>
+	</form>
+{% endblock %}
