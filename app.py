@@ -65,12 +65,12 @@ def display_error(message):
 @app.route('/profile_page/<username>', methods = ['GET', 'POST'])
 def profile_page(username):
 	location = check_find_username(username)
+	
+	if location == -1:
+		return display_error("Invalid username, this user does not exist")
 		
 	if request.method == 'POST':
 		lst_profiles[location].num_likes += 1
-		
-	elif location == -1:
-		return display_error("Invalid username, this user does not exist")	
 	
 	return render_template('profile_page.html', profile = lst_profiles[location])
 		
