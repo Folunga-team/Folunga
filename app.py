@@ -49,6 +49,16 @@ class Story(db.Model):
 	def __repr__(self):
 		return f"Story('{self.text}', '{self.date_posted}'"
 
+class Friendship(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	
+	user_first_id = db.Column(db.String(20), nullable=False)
+	user_second_id = db.Column(db.String(20), nullable=False)
+	
+	
+	def __repr__(self):
+		return f"Friendship('{self.user_first_id}', '{self.user_second_id}')"
+
 #--------------------------------------------------Messenger--------------------------------------------------------------------------
 # Mister Rohan Kola shall develop his messenger system here
 @app.route('/message')
@@ -92,8 +102,6 @@ def printable_stories(lst_profiles):
 # currently i use all stories, but they must be changed in the deep futre of time
 def printable_stories_all():
 	lst_print = Story.query.all()
-	
-		
 	return make_printable(lst_print)
 
 #--------------------------------------------------Profile Page--------------------------------------------------------------------------
@@ -104,39 +112,58 @@ def user(username):
 	
 	if human is None:
 		return display_error("Invalid username, this user does not exist")
-	
-	lst_friends = friend_list_generator(human.id)
-	
-	return render_template('user.html', human = human, num_friends = len(lst_friends), lst_prt_stories = printable_stories_person(human))
+		
+	return render_template('user.html')
 	
 def show_profile(username):
 	return redirect(url_for('user', username = username))
 
+#--------------------------------------------------Feed Page--------------------------------------------------------------------------
+#Displays all user's stories
+@app.route('/feed', methods = ['GET', 'POST'])
+def feed():
+	friends = Friendship.query.filter_by(id != session['id']).first()
+	stories = 0
+	
+	return render_template('feed.html', lst_prt_stories = stories)
+
+#--------------------------------------------------Make New Friends---------------------------------------------------------------------------
+
+#This displays a page where you can see all profiles from Folunga that are not your friends
+@app.route('/make_new_friends', methods = ['GET', 'POST'])
+def make_new_friends():
+	if request.method == 'POST':
+		return add_friend(request.form['new_friend_id'])
+	
+	all_friends = get_id_friends()
+	#because we don't want to see our profile
+	all_friends.append(session['id'])
+            
+	return render_template('make_new_friends.html',  users = Profile.query.filter(Profile.id.notin_(all_friends)).all())
+
+def get_id_friends():
+	result = db.engine.execute("SELECT user_first_id FROM Friendship WHERE user_second_id = :val", {'val':session['id']})
+	list_of_ids1 = [row[0] for row in result]
+	result = db.engine.execute("SELECT user_second_id FROM Friendship WHERE user_first_id = :val", {'val':session['id']})
+	list_of_ids2 = [row[0] for row in result]
+
+	return list_of_ids1 + list_of_ids2
+
+def add_friend(new_friend_id):
+	new_relashionship = Friendship(user_first_id = session['id'], user_second_id = new_friend_id)
+	db.session.add(new_relashionship)
+	db.session.commit()
+
+	return jsonify({'success' : "New friend added!"})
 
 #--------------------------------------------------Friends---------------------------------------------------------------------------
 
-#This section is completely under developemnt
-
-def friend_list_generator(user_id):
-	#THis must be changes soon!!!!!
-	return Profile.query.all()
-
-
-def inject_friend_list(whom, lst):
-	return render_template('friends.html',  logged_in = check_log(), profile = logged_user(), whom = whom, lst_profiles = lst)
-
-#This displays a page where you can see the list of all people on Folunga
-@app.route('/all_profiles')
-def all_profiles():
-	return inject_friend_list('all', Profile.query.all())
-
-
-# This needs development from the database system
-@app.route('/user/<username>/friends')
-def friends(username):
-	# DO something, hellllllpppppppppppppppppppppppppppppppp
-	who_all_are_this_guys_friends= Profile.query.all()
-	return inject_friend_list('all', who_all_are_this_guys_friends)
+@app.route('/friends')
+def friends():
+	
+	all_friends = get_id_friends()
+            
+	return render_template('friends.html',  list_friends = Profile.query.filter(Profile.id.in_(all_friends)).all())
 
 
 
@@ -183,6 +210,7 @@ def login(username, password):
 	if user_account.password != password:
 		return jsonify({'error' : "Wrong Password! Bad boy, dont try to login to other's accounts"})
 	
+	session['id'] = user_account.id
 	session['username'] = user_account.username
 	session['email'] = user_account.email
 	session['password'] = user_account.password
@@ -216,4 +244,5 @@ def register(new_profile, password2):
 
 		
 if __name__ == '__main__':
-    app.run(debug=True)
+	app.run(debug=True)
+	db.create_all()

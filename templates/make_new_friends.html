@@ -35,17 +35,17 @@
 	<div class="row s12 blue" style="height: 100%; min-height: 95vmin !important;">
 		<div class="row">
 
-			{% for friend in list_friends %}
+			{% for user in users %}
 
 			<div class="col s12 m3">
 				<div class="card">
 				  <div class="card-image">
 					<img src="/img/folu2.png">
-					<span class="card-title">{{ friend.first_name }}</span>
-					<!a class="new_friend btn-floating halfway-fab waves-effect waves-light red pulse"><!i class="material-icons"><!/i><!/a>
+					<span class="card-title">{{ user.first_name }}</span>
+					<a id="{{ user.id }}" class="new_friend btn-floating halfway-fab waves-effect waves-light red pulse"><i class="material-icons">add</i></a>
 				  </div>
 				  <div class="card-content">
-					<p>Hello people from Folunga!.</p>
+					<p>Hello people from Folunga!!!</p>
 				  </div>
 				</div>
 			</div>
@@ -54,4 +54,24 @@
 
 		</div>
 	</div>
+
+	<script>
+		$(".new_friend").click(function(e) {
+			e.preventDefault();
+			$.ajax({
+    			type:'POST',
+    			url:'/make_new_friends',
+    			data:{
+        			new_friend_id:this.id
+    			}
+    		}).done(function(data) {
+    			if (data.error) {
+        			M.toast({html: data.error, classes: 'rounded'})
+    			} else {
+        			M.toast({html: data.success, classes: 'rounded'})
+        			setTimeout(function () { location.reload(true); }, 1200);
+    			}
+    		});
+  		});
+	</script>
 {% endblock %}

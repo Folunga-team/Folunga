@@ -7,6 +7,9 @@
 {% block navigation_grid %}
 	<div class="row" >
     	<div class="col s12 m7">
+			
+			{% for story in lst_prt_stories %}
+
 			<div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
 				<div class="card-panel grey lighten-5 z-depth-1">
 				  <div class="row valign-wrapper">
@@ -15,133 +18,14 @@
 					</div>
 					<div class="col s9">
 					  <span class="black-text">
-						Who wants to eat pizza today??
+						{{ story.test }}
 					  </span>
 					</div>
 				  </div>
 				</div>
-			  </div>
+			</div>
 
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s9">
-						<span class="black-text">
-						  No pain, no gain!!!!!!!!!!!!!
-						</span>
-					  </div>
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					
-				  </div>
-				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					<div class="col s9">
-					  <span class="black-text">
-						Plz watch this video:
-					  </span>
-					  <a class="black-text" href="https://www.youtube.com/watch?v=gkTb9GP9lVI">
-						https://www.youtube.com/watch?v=gkTb9GP9lVI
-					  </a>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s9">
-						<span class="black-text">
-						  Noooooooooo, today is Monday :c
-						</span>
-					  </div>
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					
-				  </div>
-				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					<div class="col s9">
-					  <span class="black-text">
-						  Hello guys!
-					  </span>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s9">
-						<span class="black-text">
-							Today is a present.
-						</span>
-					  </div>
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					
-				  </div>
-				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					<div class="col s9">
-					  <span class="black-text">
-						I love mondays...
-					  </span>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s9">
-						<span class="black-text">
-							:D
-						</span>
-					  </div>
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					
-				  </div>
-				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					<div class="col s9">
-					  <span class="black-text">
-						2+2=4
-					  </span>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			  
+			{% endfor %}
 			  
     	</div>
 	</div>
