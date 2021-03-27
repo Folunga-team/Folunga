@@ -122,10 +122,7 @@ def show_profile(username):
 #Displays all user's stories
 @app.route('/feed', methods = ['GET', 'POST'])
 def feed():
-	friends = Friendship.query.filter_by(id != session['id']).first()
-	stories = 0
-	
-	return render_template('feed.html', lst_prt_stories = stories)
+	return render_template('feed.html')
 
 #--------------------------------------------------Make New Friends---------------------------------------------------------------------------
 
