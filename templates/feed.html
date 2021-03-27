@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}
+	Feed
+{% endblock %}
+
+
+{% block head %}
+	Feed
+{% endblock %}
+
+
+{% block body %}
+	<table border = 1 bgcolor = "yellow">
+		<tr>
+			<td> 
+				<h3>New Story</h3>
+				<form method = "post">
+					<p><input type = "text" name = "story"></p>
+					<p><input type = "submit" value = "Post"></p>
+				</form>
+			</td>
+		</tr>
+	</table>
+	
+	<h3>Other Stories</h3>
+	
+{% endblock %}

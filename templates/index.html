@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Folunga
+{% endblock %}
+
+{% block head %}
+  <script src="{{ url_for('static', filename= 'js/index/modals.js') }}" async></script>
+  <script src="{{ url_for('static', filename= 'js/index/forms.js') }}" async></script>
+  <script src="{{ url_for('static', filename= 'js/index/datepicker.js') }}"></script>
+
+  <script src="{{ url_for('static', filename= 'js/index/webgl.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+  <canvas id="mycanvas"></canvas>
+
+  <div class="row">
+    <! agregar lo de responsive>
+    <div class="col s3 m3 l3 pink accent-3 card-panel z-depth-5 my-wrapper valign-wrapper center-align login-card">
+      <form class="col s12" method="post" id="login-form">
+        <div class='row'>
+          <img src="/img/f.png" alt="" class="circle" style="max-width: 40%;"> <!-- notice the "circle" class -->
+          <div class='input-field col s12 email-input'>
+            <i class="material-icons prefix">account_circle</i>
+            <input class='validate' type='text' id='username' required>
+            <label for='username'>Username</label>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='input-field col s12'>
+            <i class="material-icons prefix">lock</i>
+            <input class='validate' type='password' name='password' id='password' required>
+            <label clas='blue-text' for='password'>Password</label>
+          </div>
+          <label style='float: right;'>
+            <a class='blue-text modal-trigger' href='#' onclick='forgotPassword()'><b>Forgot Password?</b></a>
+          </label>
+          <label style='float: left;'>
+            <a class='blue-text modal-trigger' href='#' onclick='registration()'><b>Create new account</b></a>
+          </label>
+        </div>
+
+        <br />
+        <center>
+          <div class='row'>
+            <button type='submit' value='submit' id='submit' class='col s12 btn btn-large waves-effect blue darken-1'>Sign in</button>
+          </div>
+        </center>
+      </form>
+    </div>
+  </div>
+
+  <div id="forgot-password" class="modal">
+    <div class="modal-content pink lighten-1">
+      
+
+      <form class="col s12" method="post" id="recovery-password">
+        <div class="column">
+          <div class="input-field col s6 center-align">
+            <input id="email-recovery-password" type="email" class="validate" required>
+            <label for="email-recovery-password">Email</label>
+          </div>
+        </div>
+
+        <div class='column center-align'>
+          <button type='submit' value='submit2' name='submit' class='col s2 btn btn-large waves-effect blue darken-1'>Recover!</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div id="registration" class="modal">
+    <div class="modal-content pink lighten-1">
+      <form class="col s12" method="post" id="registration-form">
+
+        <div class="row">
+          <div class="input-field col s6">
+            <input placeholder="" id="first_name" type="text" class="validate" required>
+            <label for="first_name">First Name</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="" id="last_name" type="text" class="validate" required>
+            <label for="last_name">Last Name</label>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='input-field col s12 email-input'>
+            <i class="material-icons prefix">account_circle</i>
+            <input placeholder="" type='text' class='datepicker' id='date_birth' required>
+            <label for='date_birth'>Date of birth</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s6">
+            <input placeholder="" id="username_registration" type="text" class="validate" required>
+            <label for="username_registration">Username</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="" id="email_registration" type="text" class="validate" required>
+            <label for="email_registration">Email</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s6">
+            <input placeholder="" id="password_registration" type="password" class="validate" required>
+            <label for="password_registration">Password</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="" id="password2_registration" type="password" class="validate" required>
+            <label for="password2_registration">Confirmation password</label>
+          </div>
+        </div>
+
+        <br />
+
+        <div class='column center-align'>
+          <button type='submit' value='submit' id='submit2' class='col s2 btn btn-large waves-effect blue darken-1'>Sign Up</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+
+  <! --------------------------Shaders----------------------->
+  <script id="vertexShader" type="x-shader/x-vertex">
+      attribute vec3 pos;
+      attribute vec4 clr;
+      
+      uniform mat4 trans;
+      
+      varying vec4 vcolor;
+      
+      void main()
+      {
+          gl_Position = trans * vec4(pos,1);
+          vcolor = clr;
+      }
+  </script>
+  <script id="fragmentShader" type="x-shader/x-fragment">
+    precision mediump float;
+    
+    varying vec4 vcolor;
+    
+    void main()
+    {
+        gl_FragColor = vcolor;
+    }
+  </script>
+{% endblock %}
