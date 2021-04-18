@@ -1,0 +1,41 @@
+{% extends "base_inside.html" %}
+
+{% block title %}
+	Friends
+{% endblock %}
+
+
+{% block page_content %}
+		<ul class="collection">
+			{% for profile in lst_profiles %}
+				<li class="collection-item avatar">
+					<img src="images/yuna.jpg" alt="" class="circle">
+					<span class="title">{{profile.first_name}}</span>
+					<p>{{profile.last_name}}<br>
+						{{profile.email}}
+					</p>
+					<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+				</li>
+			{% endfor %}
+			<! just a template example>
+			<li class="collection-item avatar">
+				<img src="{{ url_for('static', filename= 'img/folu2.png') }}" alt="" class="circle">
+				<span class="title">Folu Obidare</span>
+				<p>foluobidare@gmail.com</p>
+				<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+			</li>
+			<li class="collection-item avatar">
+				<img src="{{ url_for('static', filename= 'img/folu2.png') }}" alt="" class="circle">
+				<span class="title">Folu Obidare</span>
+				<p>foluobidare@gmail.com</p>
+				<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+			</li>
+			<li class="collection-item avatar">
+				<img src="{{ url_for('static', filename= 'img/folu2.png') }}" alt="" class="circle">
+				<span class="title">Folu Obidare</span>
+				<p>foluobidare@gmail.com</p>
+				<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+			</li>
+		</ul>
+	
+{% endblock %}
