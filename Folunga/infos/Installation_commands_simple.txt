@@ -1,0 +1,7 @@
+putin@putinscomputer:~$ mkdir dbplay
+putin@putinscomputer:~$ cd dbplay
+putin@putinscomputer:~/dbplay$ python3 -m venv env
+putin@putinscomputer:~/dbplay$ source env/bin/activate
+(env) putin@putinscomputer:~/dbplay$ pip install flask
+(env) putin@putinscomputer:~/dbplay$ pip install flask-sqlalchemy
+
