@@ -46,3 +46,25 @@ $('#registration-form').on('submit', function(e) {
     }
     });
 });
+
+$('#recovery-password-form').on('submit', function(e) {
+    console.log("8=D");
+    e.preventDefault();
+
+    $.ajax({
+    type:'POST',
+    url:'/',
+    data:{
+        form:"recovery_password",
+        email_recovery:$("#email_recovery").val()
+    }
+    })
+    .done(function(data) {
+    if (data.error) {
+        M.toast({html: data.error, classes: 'rounded'})
+    } else {
+        M.toast({html: data.success, classes: 'rounded'})
+        setTimeout(function () { location.reload(true); }, 1200);
+    }
+    });
+});
