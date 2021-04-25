@@ -1,6 +1,0 @@
-Python Installation Requirements
-
-pip install flask
-pip install flask-wtf
-pip install wtforms[email]
-pip install -U flask-cors
