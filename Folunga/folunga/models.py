@@ -1,27 +1,23 @@
 from folunga import db
 from datetime import datetime
 
+
 class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
-
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(20), nullable=False)
-
     email = db.Column(db.String(50), unique=True, nullable=False)
-    password = db.Column(db.String(20), nullable=False)
-
-    #date_birth = db.Column(db.DateTime, nullable=False)
+    password = db.Column(db.String(50), nullable=False)
     date_birth = db.Column(db.String(20), nullable=False)
-    profile_pic = db.Column(db.String(50), nullable=False, default='default.jpg')
-
+    profile_pic = db.Column(db.String(100), nullable=False, default='default.jpg')
+    user_confirmed = db.Column(db.Boolean(), nullable=False, default=False)
 
     stories = db.relationship('Story', backref='author', lazy=True)
 
 
     def __repr__(self):
         return f"User('{self.username}', '{self.password}')"
-
 
 
 class Story(db.Model):
