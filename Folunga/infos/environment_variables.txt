@@ -1,0 +1,4 @@
+To add environment variables watch these videos for clarification
+and make sure the names of the variables are set to 'EMAIL' and 'PASSWORD' also please use a gmail email address
+https://www.youtube.com/watch?v=IolxqkL7cD8 (for windows)
+https://www.youtube.com/watch?v=5iWhQWVXosU (for mac and linux)
