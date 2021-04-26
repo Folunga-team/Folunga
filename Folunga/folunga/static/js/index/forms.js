@@ -22,20 +22,16 @@ $('#login-form').on('submit', function(e) {
 
 $('#registration-form').on('submit', function(e) {
     e.preventDefault();
+
+    var form_data = new FormData($('#registration-form')[0]);
+    form_data.append('form', "registration");
     
     $.ajax({
-    type:'POST',
-    url:'/',
-    data:{
-        form:"registration",
-        first_name:$("#first_name").val(),
-        last_name:$("#last_name").val(),
-        date_birth:$("#date_birth").val(),
-        username:$("#username_registration").val(),
-        email:$("#email_registration").val(),
-        password:$("#password_registration").val(),
-        password2:$("#password2_registration").val()
-    }
+        type:'POST',
+        url:'/',
+        data: form_data,
+        processData: false,
+        contentType: false
     })
     .done(function(data) {
     if (data.error) {
@@ -48,7 +44,6 @@ $('#registration-form').on('submit', function(e) {
 });
 
 $('#recovery-password-form').on('submit', function(e) {
-    console.log("8=D");
     e.preventDefault();
 
     $.ajax({
@@ -56,7 +51,7 @@ $('#recovery-password-form').on('submit', function(e) {
     url:'/',
     data:{
         form:"recovery_password",
-        email_recovery:$("#email_recovery").val()
+        email_recovery:$("#email-recovery-password").val()
     }
     })
     .done(function(data) {

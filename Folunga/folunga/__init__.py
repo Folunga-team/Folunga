@@ -16,10 +16,13 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.environ.get('EMAIL')
 app.config['MAIL_PASSWORD'] = os.environ.get('PASSWORD')
 
+
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-
 mail = Mail(app)
+UPLOAD_FOLDER = 'folunga/static/img/profile_photos'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 # this is for the session
 app.secret_key = "folubeautiful"
 app.permanent_session_lifetime = timedelta(hours=1)
