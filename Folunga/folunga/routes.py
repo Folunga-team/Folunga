@@ -1,4 +1,5 @@
 from flask import render_template, url_for, flash, redirect, request, session, jsonify
+from datetime import datetime
 from folunga import app, bcrypt
 from folunga.forms import LoginForm, RegistrationForm
 from folunga.functions import *
@@ -19,20 +20,20 @@ def index():
 
         elif request.form.get('form') == 'registration':
             new_profile = Profile()
-            new_profile.username = request.form['username']
+            new_profile.username = request.form['username_registration']
             new_profile.first_name = request.form['first_name']
             new_profile.last_name = request.form['last_name']
-            new_profile.email = request.form['email']
+            new_profile.email = request.form['email_registration']
             new_profile.date_birth = request.form['date_birth']
+            photo_profile = request.files['photo_registration']
 
-            if request.form['password'] != request.form['password2']:
+            if request.form['password_registration'] != request.form['password2_registration']:
                 return jsonify({'error' : "Passwords do not match"})
-            hashed_password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
+            hashed_password = bcrypt.generate_password_hash(request.form['password_registration']).decode('utf-8')
             new_profile.password = hashed_password
-            return register(new_profile)
+            return register(new_profile, photo_profile)
 
         elif request.form.get('form') == 'recovery_password':
-            print("what now!")
             return forgot_password(request.form["email_recovery"])
 
     else:
@@ -66,9 +67,9 @@ def user(username):
         flash("Invalid username, this user does not exist")
         return redirect(url_for('index'))
 
-    lst_friends = friend_list_generator(human.id)
+    ls = list_all_friend_stories()
 
-    return render_template('user.html', human = human, num_friends = len(lst_friends), lst_prt_stories = printable_stories_person(human))
+    return render_template('user.html', list_stories=ls)
 
 
 # if you decide to add reset password to user page
@@ -109,17 +110,49 @@ def forgot_password_route():
         return render_template('forgot_password.html', title='Forgot Password')
 
 
-@app.route('/user/<username>/friends')
-def friends(username):
-    # DO something, hellllllpppppppppppppppppppppppppppppppp
-    who_all_are_this_guys_friends= Profile.query.all()
-    return inject_friend_list('all', who_all_are_this_guys_friends)
+@app.route('/feed', methods = ['GET', 'POST'])
+def feed():
+    ls = []
+    ls = list_all_friend_stories()
+    
+    if request.method == 'POST':
+        new_story = Story()
+        new_story.text = request.form['story_text']
+        new_story.username = session['username']
+        new_story.user_id = session['id']
+        new_story.time = datetime.now().strftime("%d/%m/%Y")
+        
+        db.session.add(new_story)
+        db.session.commit()
+        
+        if (isinstance(ls,list)):
+            ls.append(new_story)
+        else:
+            ls = [new_story]
+            
+        return jsonify({'success' : "Story posted!"})
+    
+    return render_template('feed.html', list_stories=ls)
 
+#This displays a page where you can see all profiles from Folunga that are not your friends
+@app.route('/make_new_friends', methods = ['GET', 'POST'])
+def make_new_friends():
+    if request.method == 'POST':
+        return add_friend(request.form['new_friend_id'])
 
-@app.route('/all_profiles')
-def all_profiles():
-    return inject_friend_list('all', Profile.query.all())
+    all_friends = get_id_friends()
+    all_friends.append(session['id'])
+    ls = list_all_friend_stories()
 
+    return render_template('make_new_friends.html',  users = Profile.query.filter(Profile.id.notin_(all_friends)).all(), list_stories=ls)
+
+@app.route('/friends')
+def friends():
+    all_friends = get_id_friends()
+
+    ls = list_all_friend_stories()
+
+    return render_template('friends.html',  list_friends = Profile.query.filter(Profile.id.in_(all_friends)).all(), list_stories=ls)
 
 @app.route('/logout')
 def logout():

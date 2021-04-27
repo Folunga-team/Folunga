@@ -7,141 +7,27 @@
 {% block navigation_grid %}
 	<div class="row" >
     	<div class="col s12 m7">
-			<div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					<div class="col s9">
-					  <span class="black-text">
-						Who wants to eat pizza today??
-					  </span>
-					</div>
-				  </div>
-				</div>
-			  </div>
 
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s9">
-						<span class="black-text">
-						  No pain, no gain!!!!!!!!!!!!!
-						</span>
+			{% if list_stories != None: %}
+				{% for story in list_stories %}
+
+				<div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
+					<div class="card-panel grey lighten-5 z-depth-1">
+					  <div class="row valign-wrapper">
+						<div class="col s3">
+						  <img src="/img/profile_photos/{{ story.username }}.jpg" alt="" class="circle responsive-img">
+						</div>
+						<div class="col s9">
+						  <span class="black-text">
+							{{ story.text }}
+						  </span>
+						</div>
 					  </div>
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
 					</div>
-					
-				  </div>
 				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					<div class="col s9">
-					  <span class="black-text">
-						Plz watch this video:
-					  </span>
-					  <a class="black-text" href="https://www.youtube.com/watch?v=gkTb9GP9lVI">
-						https://www.youtube.com/watch?v=gkTb9GP9lVI
-					  </a>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s9">
-						<span class="black-text">
-						  Noooooooooo, today is Monday :c
-						</span>
-					  </div>
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					
-				  </div>
-				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					<div class="col s9">
-					  <span class="black-text">
-						  Hello guys!
-					  </span>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s9">
-						<span class="black-text">
-							Today is a present.
-						</span>
-					  </div>
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					
-				  </div>
-				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					<div class="col s9">
-					  <span class="black-text">
-						I love mondays...
-					  </span>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s9">
-						<span class="black-text">
-							:D
-						</span>
-					  </div>
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					
-				  </div>
-				</div>
-			  </div>
-			  <div class="offset-m2 l6 offset-l3" style="width: 170% !important;">
-				<div class="card-panel grey lighten-5 z-depth-1">
-				  <div class="row valign-wrapper">
-					<div class="col s3">
-					  <img src="/img/folu2.png" alt="" class="circle responsive-img">
-					</div>
-					<div class="col s9">
-					  <span class="black-text">
-						2+2=4
-					  </span>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			  
+
+				{% endfor %}
+			{% endif %}
 			  
     	</div>
 	</div>
@@ -151,6 +37,7 @@
 	<div class="row s3 white " style="height: 100%; min-height: 25vmin !important;">
 		<canvas style="position: relative; width:30%; height:100%; margin:0px;"></canvas>
 		<h1 style="position:fixed; top:22%; right:5%; margin:0px;">{{ session['first_name'] }}</h1>
+		<img src="/img/profile_photos/{{ session['username'] }}.jpg" class="circle" style="width: 6vw; height: 11vh; position:fixed; left:28%; top:18%;">
 		<hr class="rounded z-depth-5" style="position:fixed; top:30%; right:2%; margin:0px;">
 	</div>
 	<div class="row s9 blue" style="height: 100%; min-height: 95vmin !important;">

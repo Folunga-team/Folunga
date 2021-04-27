@@ -54,12 +54,10 @@
 
   <div id="forgot-password" class="modal">
     <div class="modal-content pink lighten-1">
-
-
-      <form class="col s12" method="post" id="recovery-password">
+      <form class="col s12" method="post" id="recovery-password-form">
         <div class="column">
           <div class="input-field col s6 center-align">
-            <input id="email-recovery-password" type="email" class="validate" required>
+            <input id="email-recovery-password" name="email-recovery-password" type="email" class="validate" required>
             <label for="email-recovery-password">Email</label>
           </div>
         </div>
@@ -78,11 +76,11 @@
 
         <div class="row">
           <div class="input-field col s6">
-            <input placeholder="" id="first_name" type="text" class="validate" required>
+            <input placeholder="" id="first_name" name="first_name" type="text" class="validate" required>
             <label for="first_name">First Name</label>
           </div>
           <div class="input-field col s6">
-            <input placeholder="" id="last_name" type="text" class="validate" required>
+            <input placeholder="" id="last_name" name="last_name" type="text" class="validate" required>
             <label for="last_name">Last Name</label>
           </div>
         </div>
@@ -90,30 +88,42 @@
         <div class='row'>
           <div class='input-field col s12 email-input'>
             <i class="material-icons prefix">account_circle</i>
-            <input placeholder="" type='text' class='datepicker' id='date_birth' required>
+            <input placeholder="" type='text' class='datepicker' id='date_birth' name="date_birth" required>
             <label for='date_birth'>Date of birth</label>
           </div>
         </div>
 
         <div class="row">
           <div class="input-field col s6">
-            <input placeholder="" id="username_registration" type="text" class="validate" required>
+            <input placeholder="" name="username_registration" id="username_registration" type="text" class="validate" required>
             <label for="username_registration">Username</label>
           </div>
           <div class="input-field col s6">
-            <input placeholder="" id="email_registration" type="text" class="validate" required>
+            <input placeholder="" id="email_registration" name="email_registration" type="text" class="validate" required>
             <label for="email_registration">Email</label>
           </div>
         </div>
 
         <div class="row">
           <div class="input-field col s6">
-            <input placeholder="" id="password_registration" type="password" class="validate" required>
+            <input placeholder="" id="password_registration" name="password_registration" type="password" class="validate" required>
             <label for="password_registration">Password</label>
           </div>
           <div class="input-field col s6">
-            <input placeholder="" id="password2_registration" type="password" class="validate" required>
+            <input placeholder="" id="password2_registration" name="password2_registration" type="password" class="validate" required>
             <label for="password2_registration">Confirmation password</label>
+          </div>
+        </div>
+        
+        <div class='row'>
+          <div class="file-field input-field col s12">
+            <div class="btn">
+              <span>Profile photo</span>
+              <input type="file" id="photo_registration" name="photo_registration" class="validate" accept=".jpg,.png" required>
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
+            </div>
           </div>
         </div>
 
@@ -132,11 +142,11 @@
   <script id="vertexShader" type="x-shader/x-vertex">
       attribute vec3 pos;
       attribute vec4 clr;
-
+      
       uniform mat4 trans;
-
+      
       varying vec4 vcolor;
-
+      
       void main()
       {
           gl_Position = trans * vec4(pos,1);
@@ -145,9 +155,9 @@
   </script>
   <script id="fragmentShader" type="x-shader/x-fragment">
     precision mediump float;
-
+    
     varying vec4 vcolor;
-
+    
     void main()
     {
         gl_FragColor = vcolor;

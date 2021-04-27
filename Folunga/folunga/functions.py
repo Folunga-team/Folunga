@@ -1,10 +1,12 @@
-from folunga.models import Profile, Story
+import os
+from folunga.models import Profile, Story, friendship
 from folunga import db, bcrypt, mail, app
 # from folunga.routes import index, reset_password, reset_password_with_token
 from flask import jsonify, session, redirect, url_for, render_template, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Message
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from werkzeug.utils import secure_filename
 import requests
 
 
@@ -19,6 +21,7 @@ def login(username, password):
     if not bcrypt.check_password_hash(user_account.password, password):
         return jsonify({'error' : "Wrong Password! Bad boy, dont try to login to other's accounts"})
 
+    session['id'] = user_account.id
     session['username'] = user_account.username
     session['email'] = user_account.email
     session['password'] = user_account.password
@@ -28,7 +31,7 @@ def login(username, password):
     return jsonify({'success' : 'Successful login!'})
 
 
-def register(new_profile):
+def register(new_profile, photo_profile):
     # db.create_all()
     user_exists = Profile.query.filter_by(username = new_profile.username).first()
     email_exists = Profile.query.filter_by(email = new_profile.email).first()
@@ -43,8 +46,12 @@ def register(new_profile):
 
     status = response.json()['status']
     if status == "valid":
+        filename_photo = secure_filename(photo_profile.filename)
+        photo_profile.save(os.path.join(app.config['UPLOAD_FOLDER'], new_profile.username + "." + photo_profile.filename.split(".")[1]))
+
         db.session.add(new_profile)
         db.session.commit()
+        
         token = get_token(new_profile)
         email_subject = "Account Creation"
         email_body = f'''Click the following link to confirm your account
@@ -125,43 +132,6 @@ def add_story(text):
     db.session.add(story)
     db.session.commit()
 
-
-class PrintableStory:
-    def __init__(self, other):
-        self.name = full_name(other.author)
-        self.time = other.time.strftime("%d.%m.%Y %H:%M:%S")
-        self.text = other.text
-
-def make_printable(lst_raw):
-    lst_print = []
-    for raw_story in lst_raw:
-        lst_print.append(PrintableStory(raw_story))
-
-    return lst_print
-
-
-#Here I return a list of stories that can be mre easily displayed on the folunga.com/user page
-def printable_stories_person(profile):
-    lst_print = profile.stories
-
-    return make_printable(lst_print)
-
-
-def printable_stories(lst_profiles):
-    lst_print = []
-    for profile in lst_profiles:
-        lst_print.extend(printable_stories_person(profile))
-
-    return lst_print
-
-
-# currently i use all stories, but they must be changed in the deep futre of time
-def printable_stories_all():
-    lst_print = Story.query.all()
-
-
-    return make_printable(lst_print)
-
 #--------------------------------------------------Profile Page--------------------------------------------------------------------------
 #Displaying profile page and its helper function
 
@@ -172,14 +142,35 @@ def show_profile(username):
 
 #--------------------------------------------------Friends---------------------------------------------------------------------------
 
-#This section is completely under developemnt
+def list_all_friend_stories():
+    all_stories = []
+    id_friends = get_id_friends()
+    id_friends.append(session['id'])
 
-def friend_list_generator(user_id):
-    #THis must be changes soon!!!!!
-    return Profile.query.all()
+    for id_f in id_friends:
+        story_friend = list(db.engine.execute("SELECT * FROM Story WHERE user_id = :val", {'val':id_f}))
+ 
+        if (isinstance(story_friend, list)):
+            for single_story in story_friend:
+                all_stories.append(single_story)
+        else:
+            all_stories.append(story_friend)
+            
+    return all_stories
 
 
-def inject_friend_list(whom, lst):
-    return render_template('friends.html',  logged_in = check_log(), profile = logged_user(), whom = whom, lst_profiles = lst)
+#--------------------------------------------------Make New Friends------------------------------------------------------------------
+def get_id_friends():
+	result = db.engine.execute("SELECT user_first_id FROM friendship WHERE user_second_id = :val", {'val':session['id']})
+	list_of_ids1 = [row[0] for row in result]
+	result = db.engine.execute("SELECT user_second_id FROM friendship WHERE user_first_id = :val", {'val':session['id']})
+	list_of_ids2 = [row[0] for row in result]
 
+	return list_of_ids1 + list_of_ids2
 
+def add_friend(new_friend_id):
+	new_relashionship = friendship(user_first_id = session['id'], user_second_id = new_friend_id)
+	db.session.add(new_relashionship)
+	db.session.commit()
+
+	return jsonify({'success' : "New friend added!"})
