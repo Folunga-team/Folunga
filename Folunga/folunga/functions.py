@@ -1,13 +1,42 @@
 import os
 from folunga.models import Profile, Story, friendship
 from folunga import db, bcrypt, mail, app
-# from folunga.routes import index, reset_password, reset_password_with_token
 from flask import jsonify, session, redirect, url_for, render_template, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Message
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from werkzeug.utils import secure_filename
 import requests
+
+
+def add_admin_strings(name):
+    admin_username = "admin" + name
+    admin_email = admin_username + "@folunga.com"
+    admin_password = name
+    return [admin_username, admin_email, admin_password]
+
+
+def add_admins():
+    db.create_all()
+    if Profile.query.filter_by(username = "adminfolu").first():
+        return
+
+    admin_names = ["folu", "santiago", "kafi", "rohan", "mipt"]
+    for name in admin_names:
+        new_admin_profile = Profile()
+        admin_credentials = add_admin_strings(name)
+        new_admin_profile.username = admin_credentials[0]
+        new_admin_profile.first_name = name
+        new_admin_profile.last_name = name
+        new_admin_profile.email = admin_credentials[1]
+        new_admin_profile.date_birth = "28/04/2021"
+        new_admin_profile.photo_profile = "None"
+        hashed_password = bcrypt.generate_password_hash(admin_credentials[2]).decode('utf-8')
+        new_admin_profile.password = hashed_password
+        new_admin_profile.user_confirmed = True
+        db.session.add(new_admin_profile)
+
+    db.session.commit()
 
 
 def login(username, password):
@@ -32,7 +61,6 @@ def login(username, password):
 
 
 def register(new_profile, photo_profile):
-    # db.create_all()
     user_exists = Profile.query.filter_by(username = new_profile.username).first()
     email_exists = Profile.query.filter_by(email = new_profile.email).first()
 
@@ -51,7 +79,7 @@ def register(new_profile, photo_profile):
 
         db.session.add(new_profile)
         db.session.commit()
-        
+
         token = get_token(new_profile)
         email_subject = "Account Creation"
         email_body = f'''Click the following link to confirm your account
@@ -149,13 +177,13 @@ def list_all_friend_stories():
 
     for id_f in id_friends:
         story_friend = list(db.engine.execute("SELECT * FROM Story WHERE user_id = :val", {'val':id_f}))
- 
+
         if (isinstance(story_friend, list)):
             for single_story in story_friend:
                 all_stories.append(single_story)
         else:
             all_stories.append(story_friend)
-            
+
     return all_stories
 
 
