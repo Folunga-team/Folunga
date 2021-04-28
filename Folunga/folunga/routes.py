@@ -7,8 +7,7 @@ from flask_mail import Message
 
 @app.route('/', methods = ['GET', 'POST'])
 def index():
-    db.create_all()
-
+    add_admins()
     if 'username' in session:
             return redirect(url_for('user', username = session['username']))
     if request.method == 'POST':
@@ -114,25 +113,26 @@ def forgot_password_route():
 def feed():
     ls = []
     ls = list_all_friend_stories()
-    
+
     if request.method == 'POST':
         new_story = Story()
         new_story.text = request.form['story_text']
         new_story.username = session['username']
         new_story.user_id = session['id']
         new_story.time = datetime.now().strftime("%d/%m/%Y")
-        
+
         db.session.add(new_story)
         db.session.commit()
-        
+
         if (isinstance(ls,list)):
             ls.append(new_story)
         else:
             ls = [new_story]
-            
+
         return jsonify({'success' : "Story posted!"})
-    
+
     return render_template('feed.html', list_stories=ls)
+
 
 #This displays a page where you can see all profiles from Folunga that are not your friends
 @app.route('/make_new_friends', methods = ['GET', 'POST'])
@@ -146,6 +146,7 @@ def make_new_friends():
 
     return render_template('make_new_friends.html',  users = Profile.query.filter(Profile.id.notin_(all_friends)).all(), list_stories=ls)
 
+
 @app.route('/friends')
 def friends():
     all_friends = get_id_friends()
@@ -153,6 +154,7 @@ def friends():
     ls = list_all_friend_stories()
 
     return render_template('friends.html',  list_friends = Profile.query.filter(Profile.id.in_(all_friends)).all(), list_stories=ls)
+
 
 @app.route('/logout')
 def logout():
