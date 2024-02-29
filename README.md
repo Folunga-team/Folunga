@@ -1,7 +1,5 @@
 # Folunga
 
-# Folunga
-
 Folunga is a social and chatting website designed to bring people together through interactive conversations and shared experiences. This project is built with Flask for the backend, leveraging its capabilities to handle user authentication, data management, and real-time messaging. The frontend is crafted with HTML, CSS, and JavaScript, ensuring a responsive and user-friendly interface.
 
 ## Table of Contents
